@@ -1,0 +1,40 @@
+<menu 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.To_Do_List.CurrentTask" >
+
+     <group 
+        android:id="@+id/Settings" 
+        android:visible="true" 
+        android:enabled="true"
+        android:icon="@+drawable/menu">
+        <item 
+            android:id="@+id/email" 
+            android:orderInCategory="100" 
+            android:showAsAction="never" 
+            android:title="@string/email" />
+        <item 
+         android:id="@+id/emailselection" 
+         android:orderInCategory="100" 
+         android:showAsAction="never" 
+         android:title="@string/email_selection" />
+        
+        <item 
+            android:id="@+id/archiveall" 
+            android:orderInCategory="100" 
+            android:showAsAction="never" 
+            android:title="@string/archiveall" />
+        <item 
+            android:id="@+id/deleteall" 
+            android:orderInCategory="100" 
+            android:showAsAction="never" 
+            android:title="@string/deleteall" />
+        <item 
+            android:id="@+id/stats" 
+            android:orderInCategory="100" 
+            android:showAsAction="never" 
+            android:title="@string/stats" />
+    </group>
+
+
+</menu>

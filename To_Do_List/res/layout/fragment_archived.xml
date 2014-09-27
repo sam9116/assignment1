@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/archived"
+    tools:context="to_do_list.ArchivedTask" >
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <GridView
+        android:id="@+id/the_list_archive"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="120dp"
+        android:ellipsize="end"
+        android:horizontalSpacing="10dp"
+        android:maxLength="10"
+        android:maxLines="1"
+        android:numColumns="auto_fit"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="10dp" >
+ 
+    </GridView>
+
+</RelativeLayout>
