@@ -20,11 +20,11 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+//this is almost identical to single_item_archive, except everything is for curremt task items
 public class Singleitem_dialog extends Activity {
-	String[] settings = new String[] {"Delete","Archive","Add to selection","Remove from selection","Go back"};
+	String[] settings = new String[] {"Delete","Archive","Add to selection","Remove from selection","Go back"};//all the possible options
 	ListView setting_menu;
-	int index =0;
+	int index =0;//the index of the item we expanded this menu for, intialzed to 0
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class Singleitem_dialog extends Activity {
 				if(position== 0)
 				{
 					
-					da_items.Global.remove(index);
+					da_items.Global.remove(index);//removes the file from current item list,but also we wipe the savefile instead
 					fileinfileout.getstatus("save");
 					fileinfileout.saveInFile();
 
@@ -66,7 +66,7 @@ public class Singleitem_dialog extends Activity {
 				else if(position == 2)
 				{
 					//add to selections
-					da_items.Selections.add(da_items.Global.get(index));
+					da_items.Selections.add(da_items.Global.get(index));//current item selected for email and other activity
 					da_items.Global.get(index).selected = true;
 					finish();
 				}
@@ -89,11 +89,11 @@ public class Singleitem_dialog extends Activity {
 		
 		if(intent!=null)
 		{
-			index = intent.getIntExtra("id", id);
+			index = intent.getIntExtra("id", id);//get which element in the list is been optioned
 			String todoname = intent.getStringExtra("todoname");
 			//out.println(todoname);
 			TextView singletext = (TextView)findViewById(R.id.singleitem);
-			singletext.setText(todoname);
+			singletext.setText(todoname);//prints out task detail on screen
 			
 			
 		}

@@ -20,9 +20,9 @@ import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+// this has similar structure to the report class,
 public class Singleitem_dialog_archive extends Activity {
-	String[] settings = new String[] {"Delete","Restore","Add to selection","Remove from selection","Go back"};
+	String[] settings = new String[] {"Delete","Restore","Add to selection","Remove from selection","Go back"};//all the option text
 	ListView setting_menu;
 	int index =0;
 	
@@ -33,7 +33,7 @@ public class Singleitem_dialog_archive extends Activity {
 		setContentView(R.layout.one_item);
 		int id = 0;
 		setting_menu =  (ListView) findViewById(R.id.item_setting);
-		Intent intent = getIntent();
+		Intent intent = getIntent();                                                                             //loads the setting text into menu,display the menu in this context
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(Singleitem_dialog_archive.this,android.R.layout.simple_list_item_1, settings);
 		setting_menu.setAdapter(adapter);
 		setting_menu.setOnItemClickListener(new OnItemClickListener(){
@@ -45,19 +45,17 @@ public class Singleitem_dialog_archive extends Activity {
 				if(position== 0)
 				{
 					
-					da_items.Global_archived.remove(index);
-					fileinfileout.getstatus("save");
+					da_items.Global_archived.remove(index);//remove the task from archived list
+					fileinfileout.getstatus("save");//wipe that task off the save file
 					fileinfileout.saveInFile();
-					//The_lIST.adapter.updatelist(da_items.Global);
-					//fileinfileout.deleteinfile(position,listawaitingmodify);
 					finish();
 				}
 				else if(position== 1)
 				{
 					da_items.Global.add(da_items.Global_archived.get(index));
-					da_items.Global_archived.remove(index);
+					da_items.Global_archived.remove(index);//current task list gets hold a copy of that archived item, then archive item wipe the item from itself, and wiped from the save file too
 					//fileinfileout.settype(da_items.Global);
-					fileinfileout.getstatus("save");
+					fileinfileout.getstatus("save");//wipe and save both files to ensure task transfer
 					fileinfileout.saveInFile();
 					fileinfileout.getstatus("archive");
 					fileinfileout.saveInFile();
@@ -65,7 +63,7 @@ public class Singleitem_dialog_archive extends Activity {
 				}
 				else if(position == 2)
 				{
-					//add to selections
+					//add to selections for action like email,turns on the selected flag to display colors so user know its selected
 					da_items.Selections.add(da_items.Global_archived.get(index));
 					da_items.Global_archived.get(index).selected = true;
 					finish();

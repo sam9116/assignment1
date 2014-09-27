@@ -25,13 +25,13 @@ import com.google.gson.reflect.TypeToken;
 import android.content.ContextWrapper.*;
 import android.content.Context;
 import android.widget.Toast;
-//pass the list context to this class -done
+//this is my fileio method, much of the Gson part was copied from the lab3 exercise
 public class fileinfileout
 {
 	private static Context List;
-	static String file_save_name = "save.sav";
+	static String file_save_name = "save.sav";//by default the file name will be save.sav(for storing current tasked items), just so it don't return null if i screw up
 	static ArrayList<todoitems> itemlist; 
-	String status;
+	String status;//status holds the command when this function is called, to either save current task items or archived task items
 	public static void setContext(Context ctx)
 	{
 		List = ctx;
@@ -74,7 +74,7 @@ public class fileinfileout
 		{
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-			File yourFile = new File(file_save_name);
+			File yourFile = new File(file_save_name);//instead of throwing error and crying like a little girl, create the file instead
 			try {
 				yourFile.createNewFile();
 			} catch (IOException e1) {
@@ -97,10 +97,6 @@ public class fileinfileout
 			FileOutputStream fos = List.openFileOutput(file_save_name,Context.MODE_PRIVATE);
 			OutputStreamWriter os = new OutputStreamWriter(fos);
 			Gson gsonout = new Gson();
-			if(da_items.Global.size()<1)
-			{
-				out.println("WARNING: WIPING SAVEFILE");
-			}
 			if(file_save_name=="save.sav")
 			{
 				gsonout.toJson(da_items.Global,os);

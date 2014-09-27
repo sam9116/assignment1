@@ -36,16 +36,16 @@ import android.widget.Toast;
  */
 public class CurrentTask extends Fragment{
 
-	EditText enteritem;
+	EditText enteritem;//the field where user enter new tasks
 	private FragmentActivity parentactivity;
 	private RelativeLayout tasklayout;
-	GridView grid;
+	GridView grid;// i tried to stand out a bit by using gridview instead of list view to hold all my tasks
 	todoitems x = new todoitems("");
 	static customadapter adapter;
 	ArrayList<todoitems> items = new ArrayList<todoitems>();
 	public CurrentTask() {
 		// Required empty public constructor
-		da_items.intialize();
+		da_items.intialize(); // initializes/reclear all global lists,used across both current tasks and archived tasks and many other methods
 	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,51 +57,50 @@ public class CurrentTask extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		parentactivity=super.getActivity();
+		parentactivity=super.getActivity();// gets activity from taskholder,after all, there are alot of things single fragments can't do
 		
-		tasklayout = (RelativeLayout)inflater.inflate(R.layout.activity_the_l_ist, container,false);
-		Toast.makeText(parentactivity.getApplicationContext(), "in oncreateview"+da_items.Global.size(),  Toast.LENGTH_LONG).show();
-		adapter = new customadapter(parentactivity.getApplicationContext(),da_items.Global);
-		grid = (GridView)tasklayout.findViewById(R.id.the_list);
-		enteritem = (EditText)tasklayout.findViewById(R.id.body);
+		tasklayout = (RelativeLayout)inflater.inflate(R.layout.activity_the_l_ist, container,false);//reuses layout from an earlier version of the app, 
+		
+		adapter = new customadapter(parentactivity.getApplicationContext(),da_items.Global);// adapter for displaying current task items on the gridview
+		grid = (GridView)tasklayout.findViewById(R.id.the_list);// grabs the gridview in activity_the_l_ist.xml
+		enteritem = (EditText)tasklayout.findViewById(R.id.body);// grabs the input field from activity_the_l_ist.xml
 		grid.setOnItemLongClickListener(new OnItemLongClickListener()
 		{
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id)
+			public boolean onItemLongClick(AdapterView<?> parent, View view,int position, long id)//displays a dialog menu for user deciding what to do with a single current task item
 			{
 				Intent intent = new Intent(parentactivity.getApplicationContext(),Singleitem_dialog.class);
 				ViewHolder holder = (ViewHolder) view.getTag();
 				todoitems item = (todoitems) holder.selecteditem.getTag();
-				//out.println(item.todoname);
-				intent.putExtra("id", position);
-				intent.putExtra("todoname",item.todoname.toString());
+				intent.putExtra("id", position);//tells the dialog which item on the current task list was chosed
+				intent.putExtra("todoname",item.todoname.toString());//also redisplay more text on the dialog,since gridview does offer less room for texts
 				startActivity(intent);
 				// TODO Auto-generated method stub
 				return true;
 				
 			}
 		});
-		grid.setOnItemClickListener(new OnItemClickListener()
+		grid.setOnItemClickListener(new OnItemClickListener()//the core functionality of this app: did the user do the task?
 		{
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
-				Toast.makeText(parentactivity.getApplicationContext(), "in onclick:"+da_items.Global.size(),  Toast.LENGTH_LONG).show();
-				ViewHolder holder = (ViewHolder) view.getTag();
-				TextView highlight = holder.selecteditem;
-				todoitems item = (todoitems) holder.selecteditem.getTag();
+				
+				ViewHolder holder = (ViewHolder) view.getTag();// gets which cell on the gridview is clicked
+				TextView highlight = holder.selecteditem;// the actual text of the task item
+				todoitems item = (todoitems) holder.selecteditem.getTag();//extracts the todo item from that cell
 				if(item.done==false)
 				{
-					//highlight.setBackgroundColor(Color.parseColor("#0000FF"));
+					//showes a checkmark picture in the background, im too lazy to implement a prgrammatical checkboxs, but hey, it still functions the same!
 					highlight.setBackgroundDrawable(getResources().getDrawable(R.drawable.checkon));
-					item.done=true;
-					adapter.updatelist(da_items.Global); 
+					item.done=true;//item is now done, horray!
+					adapter.updatelist(da_items.Global); // update the view so user can see it
 				}
 				else
 				{
-					//highlight.setBackgroundColor(Color.parseColor("#FF0000"));
+					// showes an empty checkbox
 					highlight.setBackgroundDrawable(getResources().getDrawable(R.drawable.checkoff));
 					item.done=false;
 					adapter.updatelist(da_items.Global); 
@@ -110,23 +109,22 @@ public class CurrentTask extends Fragment{
 			}
 			
 		});
-		enteritem.setOnEditorActionListener(new OnEditorActionListener()
+		enteritem.setOnEditorActionListener(new OnEditorActionListener()// the text inputfield where user can create new task items
 		{
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId,
 					KeyEvent event) 
 			{
-				if(actionId==EditorInfo.IME_ACTION_DONE)
-				{
+				if(actionId==EditorInfo.IME_ACTION_DONE)//so instead of creating a savebutton that occupys precious screen realestate on my tiny htc desire c
+				{										//i decided to let done button on the soft keyboard do that instead,so the instance user is done typing the new task, it is saved
 					InputMethodManager imm = (InputMethodManager)parentactivity.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-				    imm.hideSoftInputFromWindow(enteritem.getWindowToken(), 0);
-				    da_items.Global.add(new todoitems(enteritem.getText().toString()));
-				    //fileinfileout.settype(items);
-				    fileinfileout.getstatus("save");
+				    imm.hideSoftInputFromWindow(enteritem.getWindowToken(), 0);//hides the keyboard when user is done
+				    da_items.Global.add(new todoitems(enteritem.getText().toString()));//intializes a new todo item and adds it to the current task list
+				    fileinfileout.getstatus("save");// saves the list
 				    fileinfileout.saveInFile();
-					enteritem.getText().clear();
-					adapter.updatelist(da_items.Global);
+					enteritem.getText().clear();//no more text in the input field
+					adapter.updatelist(da_items.Global);// update the view
 				}
 				// TODO Auto-generated method stub
 				return true;
@@ -145,7 +143,7 @@ public class CurrentTask extends Fragment{
 		// TODO Auto-generated method stub
 		super.onStart();
 		Toast.makeText(parentactivity.getApplicationContext(), "onstart in currentTASKonstart "+da_items.Global.size(),  Toast.LENGTH_SHORT).show();
-		grid.setAdapter(adapter);
+		grid.setAdapter(adapter);//refreshes the screen when user comes back from an other app
 	}
 
 	@Override
@@ -154,6 +152,7 @@ public class CurrentTask extends Fragment{
 		super.onResume();
 		Toast.makeText(parentactivity.getApplicationContext(), "onstart in currenttaskonresume"+da_items.Global.size(),  Toast.LENGTH_SHORT).show();
 		adapter.updatelist(da_items.Global); 
+		// refreshes the screen when the user is done with, for example, a dialog
 	}
 	
 	
