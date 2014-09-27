@@ -35,6 +35,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+//refernced structure of fragmentactivity on Vivek's tutorial
+//https://www.youtube.com/watch?v=-2UZDrYNsX4
 public class Taskholder extends FragmentActivity implements TabListener{
 	
 	ViewPager currentarchived = null;//
