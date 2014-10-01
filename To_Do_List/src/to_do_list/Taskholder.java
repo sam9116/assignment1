@@ -1,9 +1,9 @@
 package to_do_list;
 
 //Copyright [2014] [Sam Bao]
-//Copyright	[2014] [Jeremy Logan]
+//Copyright [2014] [Jeremy Logan]
 //Copyright [2014] [Joshua Campbell]
-//Copyright	[2013] [Vivek R]
+//Copyright [2013] [Vivek R]
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //You may obtain a copy of the License at
