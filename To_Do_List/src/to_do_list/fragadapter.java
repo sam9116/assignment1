@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 //this is used to display the fragment 
+//refereced from http://developer.android.com/reference/android/support/v4/app/FragmentPagerAdapter.html
 public class fragadapter extends FragmentPagerAdapter
 {
 
